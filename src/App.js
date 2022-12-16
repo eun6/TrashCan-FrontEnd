@@ -23,15 +23,15 @@ class App extends Component {
     console.log('App render');
     var _context = null;
     //mode에 따라 출력되는 내용이 달라지는 if문
-    if (this.state.mode == 'default') {
+    if (this.state.mode === 'default') {
       console.log('default');
       _context = this.state.default.context;
-    } else if (this.state.mode == 'show') {
+    } else if (this.state.mode === 'show') {
       console.log('show');
       var i = 0;
       while ( i < this.state.content.length) {
         var data = this.state.content[i];
-        if (data.id == this.state.selected_menu) {
+        if (data.id === this.state.selected_menu) {
           _context = data.context;
           break;
         }
@@ -79,5 +79,6 @@ function set(id){
   }
   
 };
+
 
 export default App;

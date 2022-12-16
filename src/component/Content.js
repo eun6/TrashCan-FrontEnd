@@ -3,13 +3,14 @@ import { Component } from "react";
 class Content extends Component {
     render() {
         return(
-            <div>
-                <h2>{this.props.context}</h2>
-                <button onClick={function(e){
+            <table>
+                <tr><textarea placeholder={this.props.context}></textarea></tr>
+                <tr><button id="btnSave"
+                    onClick={function(e){ //저장 버튼
                     e.preventDefault();
                     this.props.onChangePage(3);
-                }.bind(this)}>{this.props.sub}</button>
-            </div>
+                }.bind(this)}>{this.props.sub}</button></tr>
+            </table>
         );
     }
 }
