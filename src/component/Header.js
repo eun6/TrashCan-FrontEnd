@@ -8,7 +8,7 @@ class Header extends Component {
         var lists = [];
         var data = this.props.data;
         var i = 0;
-        while (i < data.length) {
+        while (i < data.length -1 ) {
             lists.push(<li key={data[i].id}>
                 <a
                 href = {'/header/' + data[i].id}

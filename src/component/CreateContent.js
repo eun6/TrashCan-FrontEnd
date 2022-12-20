@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-class Content extends Component {
+class CreateContent extends Component {
     render() {
         return(
             <table>
@@ -15,4 +15,4 @@ class Content extends Component {
     }
 }
 
-export default Content;
+export default CreateContent;

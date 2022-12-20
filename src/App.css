@@ -2,6 +2,7 @@
     text-align : center;
     background-color: #9fd4e9;
     font-family: Times, "돋움", serif;
+    white-space: pre-wrap;
 }
 
 table {
