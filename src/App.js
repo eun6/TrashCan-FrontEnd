@@ -21,11 +21,12 @@ class App extends Component {
 
   render() {
     console.log('App render');
-    var _context = null;
+    var _context, _article = null;
     //mode에 따라 출력되는 내용이 달라지는 if문
     if (this.state.mode === 'default') {
       console.log('default');
       _context = this.state.default.context;
+      _article = <Content context = {_context} sub = {this.state.save.sub} onChangePage={set.bind(this)}></Content>
     } else if (this.state.mode === 'show') {
       console.log('show');
       var i = 0;
@@ -37,8 +38,13 @@ class App extends Component {
         }
         i += 1;
       }
+      _article = <Content context = {_context} sub = {this.state.save.sub} onChangePage={set.bind(this)}></Content>
+      //아직 미완.
+    } else if (this.state.mode === 'write') {
+      _article = <Content context = {_context} sub = {this.state.save.sub} onChangePage={set.bind(this)}></Content>
     } else {
       _context = this.state.save.context;
+      _article = <Content context = {_context} sub = {this.state.save.sub} onChangePage={set.bind(this)}></Content>
     }
 
     return (
@@ -48,11 +54,7 @@ class App extends Component {
             data = {this.state.content}
             onChangePage={set.bind(this)}></Header>
         </header>
-          <Content
-            context = {_context}
-            sub = {this.state.save.sub}
-            onChangePage={set.bind(this)}
-            ></Content>
+          {_article}
       </div>
     );
   }
