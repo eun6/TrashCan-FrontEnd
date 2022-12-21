@@ -9,6 +9,7 @@ class App extends Component {
     super(props);
     this.state = {
       mode : 'default',
+      //getValue : { getuserText : ''},
       selected_menu : 0,
       default : {id : 0, context : '안녕하세요.\n 누구에게도 말 못했던 당신의 솔직한 감정을 적어보세요. \n\n여기선 자유롭게 표현할 수 있어요. \n...금방 지워버리면 되니까요.'},
       content : [
@@ -19,6 +20,11 @@ class App extends Component {
     }
 
   }
+  /*handleInput = e => {
+    const { name, value } = e.target;
+    this.setState({
+      getValue: { ...this.state.getValue, [name]: value },
+    });}*/
 
   render() {
     console.log('App render');
@@ -42,7 +48,10 @@ class App extends Component {
       _article = <ReadContent context = {_context}></ReadContent>
     } else if (this.state.mode === 'write') {
       _context = this.state.content[0].context;
-      _article = <CreateContent context = {_context} sub = {this.state.content[2].sub} onChangePage={setMode.bind(this)}></CreateContent>
+      _article = <CreateContent 
+                    context = {_context} sub = {this.state.content[2].sub}
+                    onChangePage={setMode.bind(this)}>
+                  </CreateContent>
     } else {
       _context = this.state.save.context;
       _article = <ReadContent context = {_context}></ReadContent>
