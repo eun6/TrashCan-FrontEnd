@@ -11,7 +11,7 @@ class Header extends Component {
         var data = this.props.data;
         var i = 0;
         //content에 저장된 아이템을 list에 추가하는 반복문
-        while (i < data.length -1 ) {
+        while (i < data.length) {
             lists.push(<li key={data[i].id}>
                 <a
                 href = {'/header/' + data[i].id}

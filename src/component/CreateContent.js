@@ -4,16 +4,44 @@
 import { Component } from "react";
 
 class CreateContent extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            id : this.props.data.id,
+            sub : this.props.data.sub,
+            context : this.props.data.context
+        }
+        this.textareaHandler = this.textareaHandler.bind(this);
+    }
+    textareaHandler(e){
+        this.setState({
+            context : e.target.value //[e.target.name] : ~ 으로 변경해서 쓸 수 있음.
+        });
+    }
+
     render() {
+        console.log('CreateContent render', this.state.context);
         return(
-            <table>
-                <tr><textarea placeholder={this.props.context}></textarea></tr>
-                <tr><button id="btnSave"
-                    onClick={function(e){ //저장 버튼
+            <form action='/create_process' method='post'>
+                <textarea
+                    name = 'context'
+                    placeholder = '지금 떠오르는 생각을 아무렇게 적어보세요.'
+                    onChange = {this.textareaHandler}
+                    >
+                </textarea>
+                <button
+                    type='submit'
+                    id="btnSave"
+                    onClick = {function(e){ //저장 버튼
                     e.preventDefault();
-                    this.props.onChangePage(3);
-                }.bind(this)}>{this.props.sub}</button></tr>
-            </table>
+                    this.props.onSubmit(
+                        this.state.id,
+                        this.state.sub,
+                        this.state.context);
+                    }.bind(this)}
+                    >저장하기
+                </button>
+            </form>
         );
     }
 }
