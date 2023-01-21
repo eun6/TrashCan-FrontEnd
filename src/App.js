@@ -1,8 +1,9 @@
 import './App.css';
-import { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import Header from "./component/Header";
 import CreateContent from "./component/CreateContent";
 import ReadContent from "./component/ReadContent";
+import axios from 'axios';
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +17,9 @@ class App extends Component {
         {id : 2, sub : 'Trash Can', context : '작성한 내용을 버리겠습니다.'}
       ]
     }
+  }
+  componentDidMount() {
+    axios.get('/api/hello').then(response => console.log(response.data))
   }
 
   //id가 state의 content id 값과 동일하면 data 반환하는 핸들러

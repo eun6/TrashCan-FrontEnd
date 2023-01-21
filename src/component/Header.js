@@ -1,6 +1,6 @@
 // * 화면 상단부 화면, 타이틀과 작성/버리기 바로 구성되어 있음.
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import "./Header.css";
 
 
