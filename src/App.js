@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import Header from "./component/Header";
 import CreateContent from "./component/CreateContent";
 import ReadContent from "./component/ReadContent";
@@ -18,8 +18,16 @@ class App extends Component {
       ]
     }
   }
+
+  //시작하자마자 실행되는 함수
   componentDidMount() {
-    axios.get('/api/hello').then(response => console.log(response.data))
+  }
+
+  //서버에서 작성된 정보 불러오는 함수
+  getReadServerData(e) {
+    axios.get('/read')
+    .then(response => console.log("[읽기] 성공", response.data))
+    .catch(err=> console.log("[읽기] 통신 오류"))
   }
 
   //id가 state의 content id 값과 동일하면 data 반환하는 핸들러
@@ -29,7 +37,6 @@ class App extends Component {
         var data = this.state.content[i];
         if (data.id === this.state.selected_menu) {
           return data;
-          break;
         }
         i += 1;
       }
@@ -43,35 +50,26 @@ class App extends Component {
       console.log('default');
       _context = this.state.default.context;
       _article = <ReadContent context = {_context}></ReadContent>
-    } else if (this.state.mode === 'show') {
-      console.log('show');
-      var _context = this.getReadContent();
-      _article = <ReadContent context = {_context.context}></ReadContent>
+
+    } else if (this.state.mode === 'read') {
+      console.log('read');
+      _context = "성공!";
+      _article = <ReadContent context = {_context}></ReadContent>
+
     } else if (this.state.mode === 'write') {
       _context = this.getReadContent();
-      console.log('리로드 전 write', _context);
-      _article = <CreateContent 
-                    data = {_context}
-                    onSubmit={function(_id, _sub, _contexts){
-                      var contents = Array.from(this.state.content);
-                      var i = 0;
-                      while(i < contents.length) {
-                        if(contents[i].id === _id) {
-                          contents[i] = {id : _id, sub : _sub, context : _contexts}
-                          break;
-                        }
-                        i += 1;
-                      }
-                      console.log('복제본', contents);
-                      this.setState({
-                        mode : 'show',
-                        content : contents
-                      });
-                      console.log(this.state.content);
-                    }.bind(this)}>
+      console.log('write', _context);
+      _article = <CreateContent
+                //mode를 "read"로 바꾸고 서버에 정보 요청.
+                  onSubmit={function(e){
+                    this.setState({
+                      mode : "read"
+                    });
+                    this.getReadServerData(e);
+                  }.bind(this)}>
                   </CreateContent>
     } else {
-      _context = '^^';
+      _context = '예상치 못한 mode 값입니다.';
       _article = <ReadContent context = {_context}></ReadContent>
     }
 
@@ -103,7 +101,7 @@ function setMode(id){
     });
   } else if (id < 3 ) {
     this.setState({
-      mode : 'show',
+      mode : 'read',
       selected_menu : Number(id)
     });
   }
