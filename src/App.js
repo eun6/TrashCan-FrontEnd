@@ -9,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      Data : null,
       mode : 'default',
       selected_menu : 0,
       default : {id : 0, context : '안녕하세요.\n 누구에게도 말 못했던 당신의 솔직한 감정을 적어보세요. \n\n여기선 자유롭게 표현할 수 있어요. \n...금방 지워버리면 되니까요.'},
@@ -26,6 +27,7 @@ class App extends Component {
   //서버에서 작성된 정보 불러오는 함수
   getReadServerData(e) {
     axios.get('/read')
+    .then(response => this.setState({Data : response.data.data}))
     .then(response => console.log("[읽기] 성공", response.data))
     .catch(err=> console.log("[읽기] 통신 오류"))
   }
@@ -53,7 +55,8 @@ class App extends Component {
 
     } else if (this.state.mode === 'read') {
       console.log('read');
-      _context = "성공!";
+      
+      _context = this.state.Data;
       _article = <ReadContent context = {_context}></ReadContent>
 
     } else if (this.state.mode === 'write') {
@@ -63,7 +66,8 @@ class App extends Component {
                 //mode를 "read"로 바꾸고 서버에 정보 요청.
                   onSubmit={function(e){
                     this.setState({
-                      mode : "read"
+                      mode : "read",
+                      selected_menu : 2
                     });
                     this.getReadServerData(e);
                   }.bind(this)}>
