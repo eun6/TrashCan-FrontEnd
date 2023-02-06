@@ -20,9 +20,8 @@ class CreateContent extends Component {
     }
     //저장하기 버튼 눌렀을때 서버 통신
     SaveInfo(e){
-        axios.post('/save', {
-            context : this.state.context
-        }).then(response => console.log(response.data.responseMessage))
+        axios.post('/save', { data : this.state.context})
+        .then(response => console.log(response.data.responseMessage))
         .catch(err=>{console.log("[저장] 통신 오류")})
         console.log(this.state.context);
     }
