@@ -28,8 +28,8 @@ class App extends Component {
   getReadServerData(e) {
     axios.get('/read')
     .then(response => this.setState({Data : response.data.data}))
-    .then(response => console.log("[읽기] 성공", response.data))
-    .catch(err=> err, console.log("[읽기] 통신 오류"))
+    .then(response => console.log(this.state.Data))
+    .catch(err=> console.log("[읽기] 통신 오류", err))
   }
 
   //id가 state의 content id 값과 동일하면 data 반환하는 핸들러

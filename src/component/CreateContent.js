@@ -22,7 +22,7 @@ class CreateContent extends Component {
     SaveInfo(e){
         axios.post('/save', { data : this.state.context})
         .then(response => console.log(response.data.responseMessage))
-        .catch(err=>{console.log("[저장] 통신 오류")})
+        .catch(err=>{console.log("[저장] 통신 오류", err)})
         console.log(this.state.context);
     }
 
