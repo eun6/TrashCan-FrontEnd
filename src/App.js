@@ -32,6 +32,7 @@ class App extends Component {
     .catch(err=> console.log("[읽기] 통신 오류", err))
   }
 
+
   //id가 state의 content id 값과 동일하면 data 반환하는 핸들러
   getReadContent(){
     var i = 0;
@@ -72,6 +73,11 @@ class App extends Component {
                     this.getReadServerData(e);
                   }.bind(this)}>
                   </CreateContent>
+    } else if (this.state.mode === 'trash') {
+      axios.post('/trash', { data : this.state.context})
+      .then(response => console.log(response.data.responseMessage))
+      .catch(err=>{console.log("[저장] 통신 오류", err)})
+      console.log(this.state.context);
     } else {
       _context = '예상치 못한 mode 값입니다.';
       _article = <ReadContent context = {_context}></ReadContent>
@@ -106,6 +112,11 @@ function setMode(id){
   } else if (id < 3 ) {
     this.setState({
       mode : 'read',
+      selected_menu : Number(id)
+    });
+  } else if (id <4) {
+    this.setState({
+      mode : 'trash',
       selected_menu : Number(id)
     });
   }
