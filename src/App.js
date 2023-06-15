@@ -32,6 +32,12 @@ class App extends Component {
     .catch(err=> console.log("[읽기] 통신 오류", err))
   }
 
+  deleteData(e) {
+    axios.post('/trash', { data : this.state.content.id})
+      .then(response => console.log(response.data.responseMessage))
+      .catch(err=>{console.log("[삭제] 통신 오류", err)})
+  }
+
 
   //id가 state의 content id 값과 동일하면 data 반환하는 핸들러
   getReadContent(){
@@ -39,9 +45,11 @@ class App extends Component {
       while ( i < this.state.content.length) {
         var data = this.state.content[i];
         if (data.id === this.state.selected_menu) {
+          console.log(i, data.id, this.state.selected_menu);
           return data;
         }
         i += 1;
+        
       }
   }
 
@@ -74,10 +82,10 @@ class App extends Component {
                   }.bind(this)}>
                   </CreateContent>
     } else if (this.state.mode === 'trash') {
-      axios.post('/trash', { data : this.state.context})
-      .then(response => console.log(response.data.responseMessage))
-      .catch(err=>{console.log("[저장] 통신 오류", err)})
-      console.log(this.state.context);
+      console.log('trash');
+      _context = this.state.content[1].context;
+      _article = <ReadContent context = {_context}></ReadContent>
+      this.deleteData();
     } else {
       _context = '예상치 못한 mode 값입니다.';
       _article = <ReadContent context = {_context}></ReadContent>
@@ -111,12 +119,12 @@ function setMode(id){
     });
   } else if (id < 3 ) {
     this.setState({
-      mode : 'read',
+      mode : 'trash',
       selected_menu : Number(id)
     });
   } else if (id <4) {
     this.setState({
-      mode : 'trash',
+      mode : 'read',
       selected_menu : Number(id)
     });
   }
